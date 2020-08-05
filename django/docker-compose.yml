@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  notejam:
+    restart: always
+    environment:
+      - "DATABASE_URL=${DatabaseUrl}"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8000:${AppPort}"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:${AppPort}/signin/?next=/ || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

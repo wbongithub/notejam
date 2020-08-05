@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:9.6-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: notejam
+      POSTGRES_DB: notejam
+      POSTGRES_PASSWORD: ${PostgresPassword}
+    ports:
+      - "5432:5432"

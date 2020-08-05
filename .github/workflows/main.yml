@@ -1,0 +1,22 @@
+on: [push]
+
+jobs:
+  django_unit_test:
+    runs-on: ubuntu-latest
+    name: Django Unit Test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: django/docker
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 2.7
+          architecture: x64
+      - run: |
+          cd django
+          pip install -r requirements_test.txt
+          export DATABASE_URL="sqlite:///notejam.db"
+          export CACHE_URL="dummycache://django.core.cache.backends.dummy.DummyCache"
+          python notejam/manage.py test
